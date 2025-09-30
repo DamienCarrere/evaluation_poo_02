@@ -1,0 +1,78 @@
+<?php
+require_once(__DIR__ . "/../races/Orc.php");
+require_once(__DIR__ . "/../races/Humain.php");
+require_once(__DIR__ . "/../races/Elfe.php");
+
+abstract class Personnage
+{
+
+    protected string $name;
+    protected int $strength;
+    protected int $hp;
+    protected int $stamina;
+
+
+    public function __construct(string $name, int $strength, int $hp, int $stamina)
+    {
+        $this->name = $name;
+        $this->strength = $strength;
+        $this->hp = $hp;
+        $this->stamina = $stamina;
+    }
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function getStrength()
+    {
+        return $this->strength;
+    }
+    public function getHp()
+    {
+        return $this->hp;
+    }
+    public function getStamina()
+    {
+        return $this->stamina;
+    }
+
+    public function isAlive()
+    {
+        return $this->hp > 0;
+    }
+
+    public function getDamage($damage)
+    {
+        $this->hp -= $damage;
+
+        if ($this->hp < 0) {
+            $this->hp = 0;
+        }
+    }
+
+    abstract protected function spendStamina($damage);
+
+    public function attack($target)
+    {
+
+        if ($this->stamina <= 0) {
+            echo "\033[32m{$this->getName()}\033[0m \033[34mn'as plus d'endurance! Il ne peut pas attaquer!\033[0m\n\n";
+            $this->stamina += rand(1, 10);
+            return;
+        }
+
+        $damage = rand(1, $this->getStrength());
+        $target->getDamage($damage);
+
+        $this->spendStamina($damage);
+        echo "\n================= Combat \033[32m{$this->getName()}\033[0m \033[31mvs\033[0m \033[32m{$target->getName()}\033[0m =================\n\n";
+        echo "\033[32m{$this->getName()}\033[0m attaque \033[32m{$target->getName()}\033[0m et inflige \033[31m{$damage} dégâts!\033[0m\n";
+        echo "Il reste {$this->getStamina()} d'endurance à {$this->getName()}\n";
+        echo "{$target->getName()} a {$target->getHp()} HP\n\n";
+
+
+        if (!$target->isAlive()) {
+            echo "\033[32m{$target->getName()}\033[0m \033[31mgît au sol dans une flaque de sang\033[0m\n\n";
+        }
+    }
+}
