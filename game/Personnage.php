@@ -41,7 +41,7 @@ abstract class Personnage
         return $this->hp > 0;
     }
 
-    public function getDamage($damage)
+    public function setDamage($damage)
     {
         $this->hp -= $damage;
 
@@ -56,23 +56,26 @@ abstract class Personnage
     {
 
         if ($this->stamina <= 0) {
-            echo "\033[32m{$this->getName()}\033[0m \033[34mn'as plus d'endurance! Il ne peut pas attaquer!\033[0m\n\n";
+            echo "\n===========================================================\n";
+            echo "\033[4;32m{$this->getName()}\033[0;0m \033[34mn'as plus d'endurance! Il ne peut pas attaquer!\033[0m";
             $this->stamina += rand(1, 10);
             return;
         }
 
         $damage = rand(1, $this->getStrength());
-        $target->getDamage($damage);
+        $target->setDamage($damage);
 
         $this->spendStamina($damage);
-        echo "\n================= Combat \033[32m{$this->getName()}\033[0m \033[31mvs\033[0m \033[32m{$target->getName()}\033[0m =================\n\n";
-        echo "\033[32m{$this->getName()}\033[0m attaque \033[32m{$target->getName()}\033[0m et inflige \033[31m{$damage} dégâts!\033[0m\n";
+        echo "\n================= Combat \033[1;32m{$this->getName()}\033[0;0m \033[1;31mvs\033[0;0m \033[1;32m{$target->getName()}\033[0;0m =================\n\n";
+        echo "\033[4;32m{$this->getName()}\033[0;0m attaque \033[4;32m{$target->getName()}\033[0;0m et inflige \033[31m{$damage} dégâts!\033[0m\n";
         echo "Il reste {$this->getStamina()} d'endurance à {$this->getName()}\n";
         echo "{$target->getName()} a {$target->getHp()} HP\n\n";
 
 
         if (!$target->isAlive()) {
-            echo "\033[32m{$target->getName()}\033[0m \033[31mgît au sol dans une flaque de sang\033[0m\n\n";
+            echo "\n===========================================================\n";
+            echo "\033[4;32m{$target->getName()}\033[0;31m s'est fait éviscéré par \033[4;32m{$this->getName()}\033[0m\n";
+            echo "===========================================================\n";
         }
     }
 }
