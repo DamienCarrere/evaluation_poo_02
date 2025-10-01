@@ -5,12 +5,12 @@
 class GameEngine
 {
 
-    protected array $fighters = [];
+    protected array $domeDuTonnerre = [];
 
 
     public function addFighters(Personnage $p)
     {
-        $this->fighters[] = $p;
+        $this->domeDuTonnerre[] = $p;
     }
 
     public function getPlayer($playerArray)
@@ -25,16 +25,16 @@ class GameEngine
 
     public function cleanDead()
     {
-        $this->fighters = array_values(array_filter($this->fighters, fn($f) => $f->isAlive()));
+        $this->domeDuTonnerre = array_values(array_filter($this->domeDuTonnerre, fn($f) => $f->isAlive()));
     }
     public function onTurn()
     {
 
-        if (count($this->fighters) < 2) {
+        if (count($this->domeDuTonnerre) < 2) {
             return;
         }
 
-        $currentFighters = $this->fighters;
+        $currentFighters = $this->domeDuTonnerre;
         shuffle($currentFighters);
 
         foreach ($currentFighters as $fighter) {
@@ -43,7 +43,7 @@ class GameEngine
                 continue;
             }
             $this->cleanDead();
-            $targets = array_filter($this->fighters, fn($f) => $f !== $fighter->isAlive() && $f !== $fighter);
+            $targets = array_filter($this->domeDuTonnerre, fn($f) => $f !== $fighter->isAlive() && $f !== $fighter);
 
             if (empty($targets)) {
 
@@ -61,11 +61,11 @@ class GameEngine
         while (!$this->end()) {
             $this->onTurn();
         }
-        $winner = $this->fighters[0];
+        $winner = $this->domeDuTonnerre[0];
         echo "\n\n*********************************************************\n\033[1;3;4;5;32m{$winner->getName()} à massacré tout le monde et remporte le combat!\033[0m\n*********************************************************\n";
     }
     public function end()
     {
-        return count($this->fighters) <= 1;
+        return count($this->domeDuTonnerre) <= 1;
     }
 }
