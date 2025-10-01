@@ -6,7 +6,7 @@ class Elfe extends Personnage
 {
     public function __construct($name)
     {
-        parent::__construct(name: $name, strength: 12, hp: 90, stamina: 80);
+        parent::__construct(name: $name, strength: 17, hp: 45, stamina: 60);
     }
     protected function spendStamina($damage)
     {
@@ -18,5 +18,23 @@ class Elfe extends Personnage
     protected function gainStamina()
     {
         $this->stamina += rand(3, 14);
+    }
+
+    protected function criticalRoll()
+    {
+        $criticalRoll = false;
+        $roll = rand(1, 100);
+        if ($roll >= 60) {
+            $criticalRoll = true;
+        }
+        return $criticalRoll;
+    }
+    protected function criticalStrike($damage)
+    {
+        $this->hp -= round($damage * 2);
+
+        if ($this->hp < 0) {
+            $this->hp = 0;
+        }
     }
 }

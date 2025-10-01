@@ -5,29 +5,42 @@ require_once(__DIR__ . "/races/Orc.php");
 require_once(__DIR__ . "/races/Humain.php");
 require_once(__DIR__ . "/game/GameEngine.php");
 
-$domeDuTonnere = [];
-$domeDuTonnere[] = new Orc("Brian");
-$domeDuTonnere[] = new Elfe("Damien");
-$domeDuTonnere[] = new Humain("Pierre");
-$domeDuTonnere[] = new Orc("Chloé");
-$domeDuTonnere[] = new Elfe("Valentin");
-$domeDuTonnere[] = new Humain("Wahid");
-$domeDuTonnere[] = new Orc("Jordan");
-$domeDuTonnere[] = new Elfe("Ezster");
-$domeDuTonnere[] = new Humain("Nicolas");
-$domeDuTonnere[] = new Orc("Carla");
-$domeDuTonnere[] = new Elfe("Ludovic");
-$domeDuTonnere[] = new Humain("Lolita");
-$domeDuTonnere[] = new Orc("Élodie");
-$domeDuTonnere[] = new Elfe("Joao");
-$domeDuTonnere[] = new Humain("Yassine");
-$domeDuTonnere[] = new Elfe("Enzo");
+// $domeDuTonnerre[] = new Orc("Brian");
+// $domeDuTonnerre[] = new Elfe("Damien");
+// $domeDuTonnerre[] = new Humain("Pierre");
+// $domeDuTonnerre[] = new Orc("Chloé");
+// $domeDuTonnerre[] = new Elfe("Valentin");
+// $domeDuTonnerre[] = new Humain("Wahid");
+// $domeDuTonnerre[] = new Orc("Jordan");
+// $domeDuTonnerre[] = new Elfe("Ezster");
+// $domeDuTonnerre[] = new Humain("Nicolas");
+// $domeDuTonnerre[] = new Orc("Carla");
+// $domeDuTonnerre[] = new Elfe("Ludovic");
+// $domeDuTonnerre[] = new Humain("Lolita");
+// $domeDuTonnerre[] = new Orc("Élodie");
+// $domeDuTonnerre[] = new Elfe("Joao");
+// $domeDuTonnerre[] = new Humain("Yassine");
+// $domeDuTonnerre[] = new Elfe("Enzo");
 
 
 $game = new GameEngine();
-foreach ($domeDuTonnere as $fighter) {
-    $game->addFighters($fighter);
-}
-
+$game->addFighters(
+    new Orc("Brian"),
+    new Elfe("Damien"),
+    new Humain("Pierre"),
+    new Orc("Chloé"),
+    new Elfe("Valentin"),
+    new Humain("Wahid"),
+    new Orc("Jordan"),
+    new Elfe("Ezster"),
+    new Humain("Nicolas"),
+    new Orc("Carla"),
+    new Elfe("Ludovic"),
+    new Humain("Lolita"),
+    new Orc("Élodie"),
+    new Elfe("Joao"),
+    new Humain("Yassine"),
+    new Elfe("Enzo")
+);
 
 $game->start();

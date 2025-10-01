@@ -6,7 +6,7 @@ class Humain extends Personnage
 {
     public function __construct($name)
     {
-        parent::__construct(name: $name, strength: 15, hp: 100, stamina: 60);
+        parent::__construct(name: $name, strength: 18, hp: 50, stamina: 40);
     }
 
     protected function spendStamina($damage)
@@ -19,5 +19,23 @@ class Humain extends Personnage
     protected function gainStamina()
     {
         $this->stamina += rand(2, 10);
+    }
+    protected function criticalRoll()
+    {
+        $criticalRoll = false;
+        $roll = rand(1, 100);
+        if ($roll >= 70) {
+            $criticalRoll = true;
+        }
+        return $criticalRoll;
+    }
+
+    protected function criticalStrike($damage)
+    {
+        $this->hp -= round($damage * 2.2);
+
+        if ($this->hp < 0) {
+            $this->hp = 0;
+        }
     }
 }

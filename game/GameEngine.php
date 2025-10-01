@@ -8,19 +8,19 @@ class GameEngine
     protected array $domeDuTonnerre = [];
 
 
-    public function addFighters(Personnage $p)
+    public function addFighters(Personnage ...$p)
     {
-        $this->domeDuTonnerre[] = $p;
+        $this->domeDuTonnerre = array_merge($this->domeDuTonnerre, $p);
     }
 
-    public function getPlayer($playerArray)
-    {
-        return $playerArray;
-    }
 
-    public function getId($player)
+    public function getId(): int
     {
-        return array_rand($player);
+        return array_rand($this->domeDuTonnerre);
+    }
+    public function getFighter(): Personnage
+    {
+        return $this->domeDuTonnerre[$this->getId()];
     }
 
     public function cleanDead()
@@ -30,29 +30,16 @@ class GameEngine
     public function onTurn()
     {
 
-        if (count($this->domeDuTonnerre) < 2) {
-            return;
+
+
+        $a = $this->getFighter();
+        $b = $this->getFighter();
+
+        while ($a == $b) {
+            $b = $this->getFighter();
         }
 
-        $currentFighters = $this->domeDuTonnerre;
-        shuffle($currentFighters);
-
-        foreach ($currentFighters as $fighter) {
-            if (!$fighter->isAlive()) {
-
-                continue;
-            }
-            $this->cleanDead();
-            $targets = array_filter($this->domeDuTonnerre, fn($f) => $f !== $fighter->isAlive() && $f !== $fighter);
-
-            if (empty($targets)) {
-
-                break;
-            }
-            $newDef = $targets[self::getId($targets)];
-            $fighter->attack($newDef);
-        }
-
+        $a->attack($b);
         $this->cleanDead();
     }
 
@@ -61,8 +48,11 @@ class GameEngine
         while (!$this->end()) {
             $this->onTurn();
         }
-        $winner = $this->domeDuTonnerre[0];
-        echo "\n\n*********************************************************\n\033[1;3;4;5;32m{$winner->getName()} à massacré tout le monde et remporte le combat!\033[0m\n*********************************************************\n";
+
+        if (count($this->domeDuTonnerre) === 1) {
+            $winner = $this->getFighter();
+            echo "\n\n*********************************************************\n\n\033[5;33m .-=========-.\n \'-=======-'/\n _|   .=.   |_\n((|  {{1}}  |))\n \|   /|\   |/\n  \__ '`' __/\n    _`) (`_\n  _/_______\_\n _/_________\_    \033[1;3;4;5;32m{$winner->getName()} à massacré tout le monde et remporte le combat!\033[0m\n*********************************************************\n";
+        }
     }
     public function end()
     {
