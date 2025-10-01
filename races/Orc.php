@@ -6,7 +6,7 @@ class Orc extends Personnage
 {
     public function __construct($name)
     {
-        parent::__construct(name: $name, strength: 20, hp: 120, stamina: 50);
+        parent::__construct(name: $name, strength: 20, hp: 120, stamina: 45);
     }
 
     protected function spendStamina($damage)
@@ -15,5 +15,9 @@ class Orc extends Personnage
         if ($this->stamina < 0) {
             $this->stamina = 0;
         }
+    }
+    protected function gainStamina()
+    {
+        $this->stamina += rand(1, 6);
     }
 }

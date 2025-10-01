@@ -13,6 +13,16 @@ class GameEngine
         $this->fighters[] = $p;
     }
 
+    public function getPlayer($playerArray)
+    {
+        return $playerArray;
+    }
+
+    public function getId($player)
+    {
+        return array_rand($player);
+    }
+
     public function cleanDead()
     {
         $this->fighters = array_values(array_filter($this->fighters, fn($f) => $f->isAlive()));
@@ -25,6 +35,7 @@ class GameEngine
         }
 
         $currentFighters = $this->fighters;
+        shuffle($currentFighters);
 
         foreach ($currentFighters as $fighter) {
             if (!$fighter->isAlive()) {
@@ -38,7 +49,7 @@ class GameEngine
 
                 break;
             }
-            $newDef = $targets[array_rand($targets)];
+            $newDef = $targets[self::getId($targets)];
             $fighter->attack($newDef);
         }
 
@@ -51,7 +62,7 @@ class GameEngine
             $this->onTurn();
         }
         $winner = $this->fighters[0];
-        echo "\n\n*********************************************************\n\033[1;32m{$winner->getName()} à massacré tout le monde et remporte le combat!\033[0m\n*********************************************************\n";
+        echo "\n\n*********************************************************\n\033[1;3;4;5;32m{$winner->getName()} à massacré tout le monde et remporte le combat!\033[0m\n*********************************************************\n";
     }
     public function end()
     {

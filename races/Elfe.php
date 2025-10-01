@@ -15,4 +15,8 @@ class Elfe extends Personnage
             $this->stamina = 0;
         }
     }
+    protected function gainStamina()
+    {
+        $this->stamina += rand(3, 14);
+    }
 }
